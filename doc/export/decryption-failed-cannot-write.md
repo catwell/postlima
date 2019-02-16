@@ -5,7 +5,9 @@
 The exact text of the error is:
 
 > Decryption failed :(
+>
 > An error occurred during decryption.
+>
 > Please check that you can write files to the hard drive.
 
 ![Decryption failed](decryption-failed-cannot-write.jpg)
