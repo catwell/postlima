@@ -10,7 +10,7 @@ If you have questions, you should probably [start here](https://blog.separatecon
 
 ## Lima Ultra Root Access
 
-Work in progress, please check here later. :)
+- See [here](doc/root/howto-root-ultra.md).
 
 ## Issues
 
