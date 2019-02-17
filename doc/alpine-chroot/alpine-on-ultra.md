@@ -57,34 +57,40 @@ We will store stuff in `/alpine`.
 
 In that directory, create the file `conf.sh`...
 
-    mountpoint="/user"
-    chroot_dir="$mountpoint/alpine"
+```bash
+mountpoint="/user"
+chroot_dir="$mountpoint/alpine"
+```
 
 ... another file called `run`...
 
-    #!/bin/bash
+```bash
+#!/bin/bash
 
-    cd "$(dirname "$0")"
-    . conf.sh
+cd "$(dirname "$0")"
+. conf.sh
 
-    mount /dev/disk/by-partlabel/user "$mountpoint"
+mount /dev/disk/by-partlabel/user "$mountpoint"
 
-    cp /etc/resolv.conf "$chroot_dir/etc/resolv.conf"
+cp /etc/resolv.conf "$chroot_dir/etc/resolv.conf"
 
-    mount -t proc none "$chroot_dir/proc"
-    mount -o bind /sys "$chroot_dir/sys"
-    mount -o bind /dev "$chroot_dir/dev"
+mount -t proc none "$chroot_dir/proc"
+mount -o bind /sys "$chroot_dir/sys"
+mount -o bind /dev "$chroot_dir/dev"
 
-    chroot "$chroot_dir" openrc
+chroot "$chroot_dir" openrc
+```
 
 ... and finally `shell`.
 
-    #!/bin/bash
+```bash
+#!/bin/bash
 
-    cd "$(dirname "$0")"
-    . conf.sh
+cd "$(dirname "$0")"
+. conf.sh
 
-    chroot "${chroot_dir}" /bin/sh -l
+chroot "${chroot_dir}" /bin/sh -l
+```
 
 Make `run` and `shell` executable.
 
@@ -95,17 +101,19 @@ Make `run` and `shell` executable.
 
 Create executable file `/etc/init.d/run-alpine`:
 
-    #!/bin/sh
+```bash
+#!/bin/sh
 
-    case "$1" in
-        start)
-            /home/root/alpine/run
-        ;;
-        *)
-            echo "Usage: /etc/init.d/run-alpine start"
-            exit 1
-    esac
-    exit 0
+case "$1" in
+    start)
+        /home/root/alpine/run
+    ;;
+    *)
+        echo "Usage: /etc/init.d/run-alpine start"
+        exit 1
+esac
+exit 0
+```
 
 Add it to services on boot:
 
@@ -136,7 +144,6 @@ To make openrc run in a chroot, create an empty softlevel...
 ## Add services
 
 Configuration is now complete, but let's add a service to test everything works:
-
 
     apk add nginx
     rc-update add nginx
