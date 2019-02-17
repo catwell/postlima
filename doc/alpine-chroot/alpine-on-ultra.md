@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-You need a rooted Lima Ultra.
+You need a [rooted Lima Ultra](../root/howto-root-ultra.md).
 
 ## Sources
 
