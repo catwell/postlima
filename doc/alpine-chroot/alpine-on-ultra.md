@@ -30,7 +30,7 @@ Now let's create the root directory for the distro.
 
 ## Setup a few variables
 
-You can adapt the mirror URL depending on your location
+You should [adapt the mirror URL](http://dl-cdn.alpinelinux.org/alpine/MIRRORS.txt) depending on your location.
 
     export chroot_dir="/user/alpine"
     export mirror="http://alpine.42.fr"
