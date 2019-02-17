@@ -10,7 +10,8 @@ If you have questions, you should probably [start here](https://blog.separatecon
 
 ## Lima Ultra Root Access
 
-- See [here](doc/root/howto-root-ultra.md).
+- See [here](doc/root/howto-root-ultra.md) to root.
+- Once rooted, you can do things like [running Alpine Linux in a chroot](doc/alpine-chroot/alpine-on-ultra.md).
 
 ## Issues
 
