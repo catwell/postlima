@@ -21,7 +21,7 @@ You will need:
 ## Step 1: prepare the USB key
 
 - Format your USB key with a FAT32 filesystem.
-- Copy the file [`lima-recover.pkg`](lima-recover.pkg) to the root of the USB key.
+- Copy the file [`lima-recover.pkg`](lima-recover.pkg) (SHA256: `f565055fb70f9430218924d33976d8436e163907eb6dbdde6e7deee0cdd3b3b5`) to the root of the USB key.
 - Copy your SSH public key to the root of the USB key alsongside the previous file. The file containing the key must be named `key.pub`.
 
 At this point the contents of your USB key should look like this:
