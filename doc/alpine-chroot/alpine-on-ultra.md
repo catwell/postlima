@@ -45,7 +45,7 @@ You should [adapt the mirror URL](http://dl-cdn.alpinelinux.org/alpine/MIRRORS.t
         -U --allow-untrusted --root "${chroot_dir}" \
         --initdb add alpine-base
 
-    mkdir -p "${chroot_dir}/home/root"
+    mkdir -p "${chroot_dir}/root"
     mkdir -p "${chroot_dir}/etc/apk"
     echo "${mirror}/${branch}/main" > "${chroot_dir}/etc/apk/repositories"
 
@@ -141,7 +141,11 @@ To make openrc run in a chroot, create an empty softlevel...
     rc_depend_strict="NO"
     rc_need="!net !dev !udev-mount !sysfs !checkfs !fsck !netmount !logger !clock !modules"
 
-## Add services
+Finally let's fix a small detail:
+
+    ln -s /root /home/root
+
+## (Optional) Add the nginx service
 
 Configuration is now complete, but let's add a service to test everything works:
 
@@ -152,4 +156,17 @@ Configuration is now complete, but let's add a service to test everything works:
 
 You can now exit the Alpine shell and reboot the Lima.
 
-After boot, nginx should listen on port 80.
+After boot, if you added nginx, it should listen on port 80.
+
+## (Optional) Enable the community repo
+
+Edit `/etc/apk/repositories`. There should be a single line such as this in it:
+
+    http://alpine.42.fr/v3.9/main
+
+Add a second line with `community` instead of `main` like this:
+
+    http://alpine.42.fr/v3.9/main
+    http://alpine.42.fr/v3.9/community
+
+Finally, run `apk update`.
