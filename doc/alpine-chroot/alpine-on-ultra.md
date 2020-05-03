@@ -34,11 +34,11 @@ You should [adapt the mirror URL](http://dl-cdn.alpinelinux.org/alpine/MIRRORS.t
 
     export chroot_dir="/user/alpine"
     export mirror="http://alpine.42.fr"
-    export branch="v3.9"
+    export branch="v3.11"
 
 ## Bootstrap the chroot contents
 
-    wget "${mirror}/${branch}/main/armv7/apk-tools-static-2.10.3-r1.apk"
+    wget "${mirror}/${branch}/main/armv7/apk-tools-static-2.10.5-r0.apk"
     tar -xzf apk-tools-static-*.apk
     ./sbin/apk.static \
         -X "${mirror}/${branch}/main" \
@@ -77,6 +77,7 @@ cp /etc/resolv.conf "$chroot_dir/etc/resolv.conf"
 mount -t proc none "$chroot_dir/proc"
 mount -o bind /sys "$chroot_dir/sys"
 mount -o bind /dev "$chroot_dir/dev"
+mount -o bind /dev/pts "$chroot_dir/dev/pts"
 
 chroot "$chroot_dir" openrc
 ```
@@ -106,7 +107,7 @@ Create executable file `/etc/init.d/run-alpine`:
 
 case "$1" in
     start)
-        /home/root/alpine/run
+        /alpine/run
     ;;
     *)
         echo "Usage: /etc/init.d/run-alpine start"
@@ -118,6 +119,28 @@ exit 0
 Add it to services on boot:
 
     update-rc.d run-alpine defaults
+    
+## Remove lima crontab and services
+
+    mv /etc/cron.d/lima* ~/
+    update-rc.d -f fwupdater remove
+    update-rc.d -f lima-share-gen-cert remove
+    reboot
+    
+## Remove some more service to free up memory
+
+    update-rc.d -f monit remove
+    update-rc.d -f nicmon remove
+    update-rc.d -f beacon remove
+    update-rc.d -f lima-selftest remove
+    update-rc.d -f lima-led-blink-ext remove
+    update-rc.d -f lima-kb-events remove
+    update-rc.d -f lima-share-srv remove
+    update-rc.d -f nginx remove
+    update-rc.d -f redis-server remove
+    update-rc.d -f getstatus remove
+    update-rc.d -f minicore remove
+    update-rc.d -f lsh remove
 
 ## Jump in the Alpine shell and finish configuration
 
@@ -162,11 +185,11 @@ After boot, if you added nginx, it should listen on port 80.
 
 Edit `/etc/apk/repositories`. There should be a single line such as this in it:
 
-    http://alpine.42.fr/v3.9/main
+    http://alpine.42.fr/v3.11/main
 
 Add a second line with `community` instead of `main` like this:
 
-    http://alpine.42.fr/v3.9/main
-    http://alpine.42.fr/v3.9/community
+    http://alpine.42.fr/v3.11/main
+    http://alpine.42.fr/v3.11/community
 
 Finally, run `apk update`.
