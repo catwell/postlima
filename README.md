@@ -1,5 +1,11 @@
 # postlima
 
+## WARNING
+
+For a few days https://meetlima.com has been back up.
+
+As far as I know **the owners are completely unrelated to th original Lima team**, and it really looks like a scam. Please beware...
+
 ## What is this?
 
 A repository with tools and information to help former users of Lima.
